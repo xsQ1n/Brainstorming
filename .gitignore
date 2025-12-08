@@ -1,0 +1,9 @@
+log/*
+.vscode/
+.idea/
+__pycache__/
+.git/
+*.log
+*.tar
+*.tar.gz
+*.tgz

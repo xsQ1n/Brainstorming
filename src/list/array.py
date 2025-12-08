@@ -231,13 +231,11 @@ def twoSum(numbers: List[int], target: int) -> List[int]:
                 pop_char = s[left]
                 left +=1
                 if pop_char in need:
-                    if window[pop_char] == need[pop_char]
+                    if window[pop_char] == need[pop_char]:
                         valid -= 1
                     window[pop_char] -= 1
 
-        return "" if lenght == sys.maxsize else s[start: start+length]
-
-
+        return "" if length == sys.maxsize else s[start: start+length]
 
 
 

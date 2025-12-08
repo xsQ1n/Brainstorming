@@ -15,7 +15,7 @@ class OperateList(object):
     operate list
     """
     def __init__(self) -> None:
-        self.logger = Logger("Operate List").getlogger(leavel=logging.DEBUG)\
+        self.logger = Logger("Operate List", logging.DEBUG).logger
 
     def createList(self, length) -> ListNode:
         """
