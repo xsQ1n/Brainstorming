@@ -1,19 +1,17 @@
-from asyncio.log import logger
 from copy import copy
 from email.errors import HeaderParseError
 from email.quoprimime import header_check
 from inspect import isfunction
-import logging
-import re
 from typing import List
 from .creatList import ListNode
 from src.common.logger import Logger
 
 
 class OperateList(object):
-    """"
+    """ "
     operate list
     """
+
     def __init__(self) -> None:
         self.logger = Logger("Operate List", logging.DEBUG).logger
 
@@ -22,7 +20,7 @@ class OperateList(object):
         create list
         """
         listnode = None
-        for i in range(length,0,-1):
+        for i in range(length, 0, -1):
             listnode = ListNode(i, listnode)
         self.logger.info("Create list success !!!")
         return listnode
@@ -31,7 +29,7 @@ class OperateList(object):
         """
         Print list
         """
-        if (head == None):
+        if head == None:
             self.logger.error("List is None !!!")
             return head.val
 
@@ -61,7 +59,7 @@ class OperateList(object):
         """
         Revese list(recursion)
         """
-        if (head == None or head.next == None):
+        if head == None or head.next == None:
             return head
         newhead = self.recursion_re_list(head.next)
         head.next.next = head
@@ -91,8 +89,8 @@ class OperateList(object):
         """
         merge two ascending list
         """
-        #iteration
-        #time:O(m+n),space:O(1)
+        # iteration
+        # time:O(m+n),space:O(1)
         final_list = ListNode(-1)
         tmp_list = final_list
         while headA and headB:
@@ -140,7 +138,7 @@ class OperateList(object):
         tmp_headA.next = headB
         return headA
 
-    def cycle_list(self, head:ListNode) -> ListNode:
+    def cycle_list(self, head: ListNode) -> ListNode:
         """
         find the entry to cycle list
         """
@@ -154,11 +152,11 @@ class OperateList(object):
                 return fast
         return None
 
-
     def mergeKLists(self, lists: List[ListNode]) -> ListNode:
         """
-            合并 K 个升序链表
+        合并 K 个升序链表
         """
+
         ## 方法1：逐一合并
         def mergeList(l1: ListNode, l2: ListNode) -> ListNode:
             tmp = cur_head = ListNode(-1)
@@ -210,8 +208,7 @@ class OperateList(object):
 
         # return dummy.next
 
-
-    def find_end_k_node(self, head:ListNode, k:int):
+    def find_end_k_node(self, head: ListNode, k: int):
         """
         返回链表的倒数第 k 个节点
         """
@@ -223,8 +220,7 @@ class OperateList(object):
             fast, slow = fast.next, slow.next
         return fast
 
-
-    def removeNthFromEnd(self, head:ListNode, n:int):
+    def removeNthFromEnd(self, head: ListNode, n: int):
         """
         删除链表的倒数第 N 个结点
         """
@@ -243,7 +239,6 @@ class OperateList(object):
 
         return cur_head.next
 
-
     def middleNode(self, head: ListNode) -> ListNode:
         """
         单链表的中点
@@ -251,10 +246,9 @@ class OperateList(object):
         slow, fast = head, head
 
         while fast and fast.next:
-            slow  = slow.next
+            slow = slow.next
             fast = fast.next.next
         return slow
-
 
     def hasCycle(self, head: ListNode) -> bool:
         slow, fast = head, head
@@ -267,7 +261,6 @@ class OperateList(object):
                 return True
 
         return False
-
 
     def detectCycle(self, head: ListNode) -> ListNode:
         # ## 方法1：使用set实现
@@ -298,7 +291,6 @@ class OperateList(object):
             fast = fast.next
         return slow
 
-
     def getIntersectionNode(self, headA: ListNode, headB: ListNode) -> ListNode:
         """
         两个链表是否相交
@@ -309,7 +301,6 @@ class OperateList(object):
             l1 = l1.next if l1 else headB
             l2 = l2.next if l2 else headA
         return l1
-
 
     def deleteDuplicates(self, head: ListNode) -> ListNode:
         """
@@ -327,7 +318,6 @@ class OperateList(object):
         slow.next = None
         return head
 
-
     def removeElement(self, nums: List[int], val: int) -> int:
         """
         移除值为 val 的元素
@@ -340,5 +330,3 @@ class OperateList(object):
             fast += 1
 
         return slow
-
-
