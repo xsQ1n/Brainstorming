@@ -5,6 +5,58 @@ class TreeNode:
         self.left = left
         self.right = right
 
+    def __str__(self):
+        """
+        打印用户所见数据
+        """
+        return "val: %s" % (self.val)
+
+    __repr__ = __str__  # 调试时看见数据
+
+    def __iter__(self):
+        """
+        迭代器
+        """
+        return self  # 返回迭代对象
+
+    def __next__(self):
+        """
+        支持迭代获取
+        """
+        pass
+
+    def __getitem__(self, key):
+        """
+        支持下标访问
+        """
+        pass
+
+    def __setitem__(self, key, value):
+        """
+        支持赋值
+        """
+        pass
+
+    def __delitem__(self, key):
+        """
+        支持删除
+        """
+        pass
+
+    def __getattr__(self, attr):
+        """
+        动态返回一个属性
+        不存在属性时，才会调用这个函数
+        """
+        pass
+
+    def __call__(self, *args, **kwds):
+        """
+        支持函数调用
+        """
+        pass
+
+
 # 多叉数类
 class MulTreeNode:
     def __init__(self, val: int):
@@ -17,6 +69,7 @@ def traverse_array(array) -> None:
     for i in array:
         print(i)
 
+
 # 递归遍历数组
 def traverse_array_recursion(array, index) -> None:
     if len(array) == 0 or index == (len(array) - 1):
@@ -28,11 +81,13 @@ def traverse_array_recursion(array, index) -> None:
     # 后序位置
     # print(array[index])
 
+
 # 迭代遍历单链表
 def traverse_list(head) -> None:
     while head is not None:
         print(head.val)
         head = head.next
+
 
 # 递归遍历单链表
 def traverse_list_recursion(head) -> None:
@@ -40,10 +95,11 @@ def traverse_list_recursion(head) -> None:
         return
 
     # 前序位置
-    #print(head.val)
+    # print(head.val)
     traverse_list_recursion(head.next)
     # 后序位置
-    #print(head.val)
+    # print(head.val)
+
 
 # 二叉树递归遍历（DFS）框架
 def traverse_binary_tree(tree: TreeNode) -> None:
@@ -56,12 +112,15 @@ def traverse_binary_tree(tree: TreeNode) -> None:
     traverse_binary_tree(tree.right)
     # 后序遍历：可以获取根节点的值、左子树，右子树
 
+
 # 知识点： 二叉搜索树（BST） 的中序遍历结果是有序的
 
 
 # 二叉树层序遍历（BFS）框架
 ## 写法1
 from collections import deque
+
+
 def levelOrderTraverse(tree: TreeNode) -> None:
     if tree is None:
         return
@@ -70,9 +129,9 @@ def levelOrderTraverse(tree: TreeNode) -> None:
     q.append(tree)
 
     while q:
-        node = q.popleft();
+        node = q.popleft()
         print(node.val)
-        #子节点介入队列
+        # 子节点介入队列
         if node.left:
             q.append(node.left)
         if node.right:
@@ -81,6 +140,8 @@ def levelOrderTraverse(tree: TreeNode) -> None:
 
 ## 写法2：记录层级深度
 from collections import deque
+
+
 def levelOrderTraverse(tree: TreeNode) -> None:
     if tree is None:
         return
@@ -93,10 +154,10 @@ def levelOrderTraverse(tree: TreeNode) -> None:
     while q:
         size = len(q)
         for i in range(size):
-            node = q.popleft();
+            node = q.popleft()
             print(node.val, depth)
 
-            #子节点介入队列
+            # 子节点介入队列
             if node.left:
                 q.append(node.left)
             if node.right:
@@ -107,10 +168,13 @@ def levelOrderTraverse(tree: TreeNode) -> None:
 
 ## 写法3：适配不同权重边的写法，后序可进阶图遍历
 from collections import deque
+
+
 class State(object):
     def __init__(self, node: TreeNode, depth) -> None:
         self.node = node
         self.depth = depth
+
 
 def levelOrderTraverse(tree: TreeNode) -> None:
     if tree is None:
@@ -139,12 +203,15 @@ def traverse_n_tree(tree: MulTreeNode) -> None:
         traverse_n_tree(child)
     # 后序位置
 
+
 # 知识点：多叉树没有了中序位置，因为可能有多个节点嘛，所谓的中序位置也就没什么意义了。
 
 
 # 多叉数层序遍历（BFS）框架
 ## 方法1
 from collections import deque
+
+
 def levelOrderTraverse(tree: MulTreeNode) -> None:
     if tree is None:
         return
@@ -153,14 +220,17 @@ def levelOrderTraverse(tree: MulTreeNode) -> None:
     q.append(tree)
 
     while q:
-        node = q.popleft();
+        node = q.popleft()
         print(node.val)
 
         for child in node.children:
             q.append(child)
 
+
 ## 方法2：记录层级深度
 from collections import deque
+
+
 def levelOrderTraverse(tree: MulTreeNode) -> None:
     if tree is None:
         return
@@ -172,18 +242,20 @@ def levelOrderTraverse(tree: MulTreeNode) -> None:
     while q:
         size = len(q)
         for i in range(size):
-            node = q.popleft();
+            node = q.popleft()
             print(node.val, depth)
 
             for child in node.children:
                 q.append(child)
         depth += 1
 
+
 ## 方法3：适配不同权重边的写法
 class State(object):
     def __init__(self, node: MulTreeNode, depth) -> None:
         self.node = node
         self.depth = depth
+
 
 def levelOrderTraverse(tree: MulTreeNode) -> None:
     if tree is None:
@@ -220,6 +292,7 @@ def graph_dfs_with_iteration(graph, start) -> None:
 
         print(cur)
 
+
 ### 方式2：递归
 def graph_dfs_with_recursion(graph, start) -> None:
     if start not in graph:
@@ -236,9 +309,10 @@ def graph_dfs_with_recursion(graph, start) -> None:
     dfs(start)
 
 
-
 ## 图-BFS
 from collections import deque
+
+
 def graph_bfs(graph: dict, start) -> None:
     # 使用队列完成，先进先出
     if start not in graph:
