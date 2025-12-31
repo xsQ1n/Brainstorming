@@ -1,5 +1,7 @@
 from collections import Counter
 import sys
+
+
 # 快速排序
 def quick_sort(array: list, start_index, end_index) -> list:
     if array is None or len(array) <= 1 or start_index >= end_index:
@@ -70,7 +72,8 @@ def removeDuplicates(nums: List[int]) -> int:
     while fast < len(nums):
         if nums[slow] != nums[fast]:
             slow += 1
-            nums[slow] = nums[fast]
+            if fast - slow > 0:  # 避免重复赋值
+                nums[slow] = nums[fast]
         fast += 1
 
     # slow从零开始，所以返回+1
@@ -91,7 +94,7 @@ def moveZeroes(nums: List[int]) -> None:
             slow += 1
         fast += 1
 
-    while slow < len(nums) :
+    while slow < len(nums):
         nums[slow] = 0
         slow += 1
 
@@ -132,12 +135,11 @@ def twoSum(numbers: List[int], target: int) -> List[int]:
     #     memo[num] = i
     # return [-1, -1]
 
-
     def reverseString(self, s: List[str]) -> None:
         """
         反转字符串
         """
-        left, right = 0 , len(s) - 1
+        left, right = 0, len(s) - 1
 
         while left < right:
             # tmp = s[left]
@@ -147,7 +149,6 @@ def twoSum(numbers: List[int], target: int) -> List[int]:
             s[left], s[right] = s[right], s[left]
             left += 1
             right -= 1
-
 
     def isPalindrome(s: str):
         """
@@ -161,28 +162,27 @@ def twoSum(numbers: List[int], target: int) -> List[int]:
             right -= 1
         return True
 
-
     def longestPalindrome(s: str) -> str:
         """
         最长回文子串
         """
+
         def helper(s, l, r):
-            while l>=0 and r< len(s) and s[r] == s[l]:
+            while l >= 0 and r < len(s) and s[r] == s[l]:
                 l -= 1
                 r += 1
             # 此处 l+1 是因为使用的while循环
             # r保持不动 是因为列表取值只会到 r-1
-            return s[l+1:r]
+            return s[l + 1 : r]
 
         res = ""
         for i in range(0, len(s)):
             s1 = helper(s, i, i)
-            s2 = helper(s, i, i+1)
+            s2 = helper(s, i, i + 1)
             res = s1 if len(res) < len(s1) else res
             res = s2 if len(res) < len(s2) else res
 
         return res
-
 
     def minWindow(self, s: str, t: str) -> str:
         """
@@ -222,27 +222,26 @@ def twoSum(numbers: List[int], target: int) -> List[int]:
             right += 1
             if push_char in need:
                 window[push_char] = window.get(push_char, 0) + 1
-                if (window[push_char] == need[push_char]):
+                if window[push_char] == need[push_char]:
                     valid += 1
             while valid == len(need):
-                if right - left< lenght:
+                if right - left < lenght:
                     start = left
                     length = right - left
                 pop_char = s[left]
-                left +=1
+                left += 1
                 if pop_char in need:
                     if window[pop_char] == need[pop_char]:
                         valid -= 1
                     window[pop_char] -= 1
 
-        return "" if length == sys.maxsize else s[start: start+length]
+        return "" if length == sys.maxsize else s[start : start + length]
 
 
-
-if __name__ == '__main__':
+if __name__ == "__main__":
     array_1 = [1, 3, 5, 2, 4, 6]
     array_2 = [1, 3, 5, 2, 4, 6]
-    quick_sort(array_1, 0 , len(array_1) - 1)
+    quick_sort(array_1, 0, len(array_1) - 1)
     print(f"快速排序结果：{array_1}")
     merge_sort(array_2)
     print(f"归并排序结果：{array_2}")
