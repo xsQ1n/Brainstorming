@@ -1,10 +1,94 @@
-
 # Definition for a binary tree node.
+from collections import deque
+
+
 class TreeNode:
     def __init__(self, val=0, left=None, right=None):
         self.val = val
         self.left = left
         self.right = right
+
+    def traverse(self, root):
+        """
+        递归遍历 -> DFS
+        """
+        if root is None:
+            return
+
+        # 前序遍历
+        self.traverse(root.left)
+        # 中序遍历
+        self.traverse(root.right)
+        # 后序遍历
+
+    def levelOrderTraverse1(self, root):
+        """
+        层序遍历 -> BFS
+        第一种
+        """
+        if root is None:
+            return
+
+        q = deque()
+        q.append(root)
+
+        while q:
+            node = q.popleft()
+            print(node.val)  # 执行操作
+
+            if node.left:
+                q.append(node.left)
+            if node.right:
+                q.append(node.right)
+
+    def levelOrderTraverse2(self, root):
+        """
+        层序遍历 -> BFS
+        第二种：记录深度
+        """
+        if root is None:
+            return
+
+        q = deque()
+        q.append(root)
+        depth = 1
+
+        while q:
+            size = len(q)  # 记录当前层数的节点数，方便后续整层连续遍历
+            for i in range(size):
+                node = q.popleft()
+                print(f"depth = {depth}, val = {node.val}")  # 执行操作
+                if node.left:
+                    q.append(node.left)
+                if node.right:
+                    q.append(node.right)
+            depth += 1  # 当前层遍历完成，深度加1
+
+    def levelOrderTraverse2(self, root):
+        """
+        层序遍历 -> BFS
+        第三种：引入State类，可记录每个节点的深度
+        """
+        if root is None:
+            return
+
+        q = deque()
+        q.append(State(root, 1))
+
+        while q:
+            cur = q.popleft()
+            print(f"depth = {cur.depth}, val = {cur.node.val}")  # 执行操作
+
+            if cur.node.left:
+                q.append(State(cur.node.left, cur.depth + 1))
+            if cur.node.right:
+                q.append(State(cur.node.right, cur.depth + 1))
+
+
+class State(object):
+    def __init__(self, node: TreeNode, depth):
+        self.node = TreeNode
+        self.depth = depth
 
 
 ## 前序遍历二叉树的值
@@ -12,6 +96,7 @@ class Solution:
     # 方式1：回溯算法，设置变量存取val
     def preorderTraversal(self, root: TreeNode) -> List[int]:
         res = []
+
         def helper(root: TreeNode):
             if root is None:
                 return
@@ -22,7 +107,6 @@ class Solution:
 
         helper(root)
         return res
-
 
     ## 方式2: 动态规划，分解子问题
     def preorderTraversal(self, root: TreeNode) -> List[int]:
@@ -48,7 +132,6 @@ class Solution:
 
         return max(left_depth, right_depth) + 1
 
-
     ## 方式2：回溯算法 ，计算每个节点的深度，然后求最大值
     def maxDepth(self, root: TreeNode) -> int:
         res = 0
@@ -71,6 +154,7 @@ class Solution:
         helper(root)
         return res
 
+
 ## 延伸：二叉树节点总数 | 二叉树每个节点的左右子树各有多少节点
 def count(root: TreeNode):
     if root is None:
@@ -85,6 +169,7 @@ class Solution:
     # 动态规划：左右子树的深度的和即为二叉树的直径
     def diameterOfBinaryTree(self, root: TreeNode) -> int:
         maxPath = 0
+
         def helper(root: TreeNode) -> int:
             if root is None:
                 return 0
@@ -113,14 +198,16 @@ class Solution:
             right_serial = helper(root.right)
 
             # x(左子树的序列化结果)(右子树的序列化结果)
-            serial = "".join(str(root.val), "(", left_serial, ")", "(", right_serial,")")
+            serial = "".join(
+                str(root.val), "(", left_serial, ")", "(", right_serial, ")"
+            )
             # 必须使用原来的node，否则新的和原来的引用不一样，set会认为是两个，无法去重
             if serial in repeat:
                 res.add(repeat[serial])
             else:
                 repeat[serial] = root
 
-            return  serial
+            return serial
 
         helper(root)
 

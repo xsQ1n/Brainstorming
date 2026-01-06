@@ -1,6 +1,7 @@
 from collections import deque
 
-def graph_bfs(graph: dict, start) -> None:
+
+def graph_bfs(graph: dict, start, target) -> None:
     # 使用队列完成，先进先出
     if start not in graph:
         return
@@ -8,16 +9,22 @@ def graph_bfs(graph: dict, start) -> None:
     queue = deque([start])
     isTouch = set()
     isTouch.add(start)
+    step = 0
 
     while queue:
         cur = queue.popleft()
+        # if cur == target:
+        #     return step
+
         nodes = graph.get(cur)
 
         for node in nodes:
             if node not in isTouch:
                 queue.append(node)
                 isTouch.add(node)
-        print(cur)
+        print(f"visit {cur} at step {step}")
+        step += 1
+    # return -1
 
 
 def graph_dfs_with_recursion(graph: dict, start) -> None:
@@ -49,22 +56,19 @@ def graph_dfs_iteration(graph: dict, start) -> None:
         print(cur)
 
 
-
-
 if __name__ == "__main__":
+    # 邻接表
     graph = {
-        'A': ['B', 'C'],
-        'B': ['A', 'D', 'E'],
-        'C': ['A', 'F'],
-        'D': ['B'],
-        'E': ['B', 'F'],
-        'F': ['C', 'E']
+        "A": ["B", "C"],
+        "B": ["A", "D", "E"],
+        "C": ["A", "F"],
+        "D": ["B"],
+        "E": ["B", "F"],
+        "F": ["C", "E"],
     }
     print("使用迭代完成深度优先遍历")
-    graph_dfs_iteration(graph, 'A')
+    graph_dfs_iteration(graph, "A")
     print("使用递归完成深度优先遍历")
-    graph_dfs_with_recursion(graph, 'A')
+    graph_dfs_with_recursion(graph, "A")
     print("广度优先遍历")
-    graph_bfs(graph, 'A')
-
-
+    graph_bfs(graph, "A", "F")
