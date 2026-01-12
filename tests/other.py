@@ -588,6 +588,116 @@ class Solution:
         return right if nums[right] == target else -1
 
 
+    def findDuplicate(self, nums: List[int]) -> int:
+        """
+        287. 寻找重复数
+        """
+
+        # 暴力循环超时
+        # if not nums:
+        #     return
+
+        # length = len(nums)
+        # for i in range(length):
+        #     for j in range(i+1, length):
+        #         if nums[i] == nums[j]:
+        #             return nums[i]
+
+        slow, fast = 0, 0
+
+        while True:
+            slow = nums[slow]
+            fast = nums[nums[fast]]
+
+            if slow == fast:
+                break
+
+        slow = 0
+
+        while slow != fast:
+            slow = nums[slow]
+            fast = nums[fast]
+
+        return slow
+
+
+    def subsets(self, nums: List[int]) -> List[List[int]]:
+        """
+        78. 子集
+        """
+
+        # 方法1
+        # res = [[]]
+        # for i in nums:
+        #     tmp = []
+        #     for sub in res:
+        #         tmp.append([i] + sub)
+        #     res = res + tmp
+        # return res
+
+        # 方法2
+        # res = []
+        # n = len(nums)
+        # for mask in range(1 << n):
+        #     tmp = []
+        #     for i in range(n):
+        #         if mask & (1 << i):
+        #             tmp.append(nums[i])
+        #     res.append(tmp)
+        # return res
+
+        # 方法3
+        res = []
+        track = []
+
+        def backTrack(sub_nums):
+            res.append(track.copy())
+
+            for i in range(len(sub_nums)):
+                track.append(sub_nums[i])
+                backTrack(sub_nums[i+1:])
+                track.pop()
+
+        backTrack(nums)
+
+        return res
+
+
+    def subsetsWithDup(self, nums: List[int]) -> List[List[int]]:
+        """
+        90. 子集 II
+        """
+        if len(nums) < 1:
+            return []
+
+        res = []
+        track = []
+
+        def quick_sort(arr):
+            if len(arr) <= 1:
+                return arr
+            base = arr[0]
+
+            left = [x for x in arr[1:] if x <= base]
+            right = [x for x in arr[1:] if x > base]
+
+            return quick_sort(left) + [base] + quick_sort(right)
+
+
+        def dfs(sub_nums):
+            if track not in res:
+                res.append(track.copy())
+
+            for i in range(len(sub_nums)):
+                track.append(sub_nums[i])
+                dfs(sub_nums[i+1:])
+                track.pop()
+
+        tmp_nums = quick_sort(nums)
+        dfs(tmp_nums)
+        return res
+
+
 # 回文子串
 # 最长回文子串
 # 最长回文子序列

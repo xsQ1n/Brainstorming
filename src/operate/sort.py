@@ -108,7 +108,7 @@ def format_print(array: List[int]):
 
 
 if __name__ == "__main__":
-    test = [5, 2, 3, 1]
+    test = [5, 2, 3, 1, 2, 3, 5]
     bubble_sort(test)
     insert_sort(test)
     merge_sort(test)
